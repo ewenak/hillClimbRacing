@@ -101,13 +101,10 @@ function setup() {
     window.canvas = createCanvas(1000, 500);
     canvas.parent("canvas");
     frameRate(30);
-    CBHeadSprite = loadImage("Pics/CBHead3.png");
-    headSprite = loadImage("Pics/headLarge.png");
-
-
+    headSprite = loadImage("Pics/head.png");
 
     carSprite = loadImage("Pics/car.png");
-    wheelSprite = loadImage("Pics/wheel2.png");
+    wheelSprite = loadImage("Pics/wheel.png");
 
     world = new b2World(new Vec2(0, 10), true);
     car = new Car(150, 0);
@@ -216,10 +213,32 @@ function resetCar() {
 
 
 function mousePressed() {
-
-
+     if(mouseX>500){
+        rightDown = true;
+        car.motorOn(true);
+        }else{
+        leftDown = true;
+        car.motorOn(false);
+     }
 }
 
+function mouseReleased() {
+    if(rightDown == true){
+        rightDown = false;
+        if (leftDown) {
+            car.motorOn(false);
+        } else {
+            car.motorOff();
+        }
+    }else if(leftDown == true){
+        leftDown = false;
+        if (rightDown) {
+            car.motorOn(true);
+        } else {
+            car.motorOff();
+        }
+    }
+}
 
 
 function keyPressed() {

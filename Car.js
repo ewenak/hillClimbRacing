@@ -229,7 +229,6 @@ class Car {
                 this.chassisBody.ApplyTorque(this.motorState * this.rotationTorque);
                 break;
 
-
         }
         this.motorState = 0;
 

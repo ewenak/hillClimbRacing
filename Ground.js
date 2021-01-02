@@ -36,7 +36,7 @@ class Ground {
     show() {
         fill(82, 30, 0);
         noStroke();
-        stroke(0, 100, 0);
+        stroke(0, 205, 0);
         strokeWeight(this.grassThickness * 2);
 
         beginShape();
