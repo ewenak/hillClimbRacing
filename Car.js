@@ -120,6 +120,9 @@ class Car {
         this.rotationTorque = 2;
     }
 
+    getXPosition() {
+        return this.chassisBody.GetPosition().x * SCALE;
+    }
 
     show() {
 

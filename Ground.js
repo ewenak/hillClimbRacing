@@ -1,14 +1,15 @@
 class Ground {
 
-    constructor() {
+    constructor(x=0) {
         this.vectors = [];
-        this.distance = 20 * canvas.width;
-        this.x = 0;
-        this.y = 0;
+        this.width = 20 * canvas.width;
+        this.distance = x + this.width;
+        this.recreateAt = this.distance - canvas.width;
+        this.x = x;
         this.smoothness = 10; //a vector every
         this.grassThickness = 5;
 
-        for (var i = 0; i < this.distance; i += this.smoothness) {
+        for (var i = this.x; i < this.distance; i += this.smoothness) {
             this.vectors.push(new Vec2(i, canvas.height - map(noise(i / 500), 0, 1, 10, 500)));
         }
 

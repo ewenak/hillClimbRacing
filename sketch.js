@@ -32,7 +32,7 @@ var groundBody;
 
 var wheels = [];
 var car;
-var ground;
+var grounds = [];
 
 var panX = 0;
 var panY = 0;
@@ -108,8 +108,7 @@ function setup() {
 
     world = new b2World(new Vec2(0, 10), true);
     car = new Car(150, 0);
-    ground = new Ground();
-
+    grounds.push(new Ground());
 
     world.SetContactListener(listener);
 
@@ -173,6 +172,12 @@ function draw() {
         i.show();
     }
 
+    carx = car.getXPosition()
+    if (carx >= grounds[grounds.length - 1].recreateAt) {
+        grounds.push(new Ground(grounds[grounds.length - 1].recreateAt));
+    }
+    grounds.filter(ground => (ground.x < panX && panX < ground.recreateAt) || (panX < ground.x && ground.x < panX + canvas.width))
+        .forEach(ground => ground.show());
     // push();
     // x = groundBody.GetPosition().x * SCALE;
     // y = groundBody.GetPosition().y * SCALE;
@@ -183,7 +188,6 @@ function draw() {
     // rectMode(CENTER);
     // rect(0, 0, canvas.width, 20);
     // pop();
-    ground.show();
 
     car.show();
     car.update();
