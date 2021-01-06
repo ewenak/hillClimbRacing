@@ -30,15 +30,15 @@ class Ground {
             this.grassBodies.push(this.addEdge(new Vec2(this.vectors[i - 1].x, this.vectors[i - 1].y - this.grassThickness / SCALE), new Vec2(this.vectors[i].x,
                 this.vectors[i].y - this.grassThickness / SCALE), GRASS_MASK, GRASS_CATEGORY));
         }
-
-
     }
 
     show() {
         fill(82, 30, 0);
         noStroke();
-        stroke(0, 205, 0);
-        strokeWeight(this.grassThickness * 2);
+        if (this.x == 0) {
+            stroke(0, 205, 0);
+            strokeWeight(this.grassThickness * 2);
+        }
 
         beginShape();
         push();
@@ -47,12 +47,23 @@ class Ground {
             vertex(this.vectors[i].x * SCALE, this.vectors[i].y * SCALE);
         }
 
+        // Vertical closing bar to get a closed shape
         vertex(this.distance, canvas.height + this.grassThickness * 2 + panY);
-        vertex(0, canvas.height + this.grassThickness * 2 + panY);
+        vertex(this.x, canvas.height + this.grassThickness * 2 + panY);
 
         endShape(CLOSE);
-        strokeWeight(1);
         pop();
+
+        if (this.x != 0) {
+            // Grass
+            stroke(0, 205, 0);
+            strokeWeight(this.grassThickness * 2);
+
+            for (var i = 0; i < this.vectors.length - 2; i++) {
+                line(this.vectors[i].x * SCALE - panX, this.vectors[i].y * SCALE - panY, this.vectors[i + 1].x * SCALE - panX, this.vectors[i + 1].y * SCALE - panY);
+            }
+        }
+        strokeWeight(1);
     }
 
     addEdge(vec1, vec2, mask, category) {
@@ -77,22 +88,4 @@ class Ground {
         return tempBody;
         // bodies.push(tempBody);
     }
-    // makeBody() {
-    //   var bodyDef = new b2BodyDef();
-    //   bodyDef.type = b2StaticBody;
-    //   bodyDef.position.x = 0; //canvas.width / 2 / SCALE;
-    //   bodyDef.position.y = 0; //(canvas.height - 20) / SCALE;
-    //
-    //   var fixDef = new b2FixtureDef();
-    //   fixDef.friction = 0.9;
-    //   fixDef.restitution = 0.1;
-    //   fixDef.shape = new b2PolygonShape();
-    //
-    //   fixDef.shape.SetAsArray(this.vectors, this.vectors.length);
-    //
-    //   this.body = world.CreateBody(bodyDef);
-    //   this.body.CreateFixture(fixDef);
-    //
-    // }
-
 }
