@@ -173,21 +173,14 @@ function draw() {
     }
 
     carx = car.getXPosition()
-    if (carx >= grounds[grounds.length - 1].recreateAt) {
-        grounds.push(new Ground(grounds[grounds.length - 1].recreateAt));
+    // Create a new ground if we arrive at the end of the last one
+    if (carx >= grounds[grounds.length - 1].nextGroundX) {
+        grounds.push(new Ground(grounds[grounds.length - 1].nextGroundX));
     }
-    grounds.filter(ground => (ground.x < panX && panX < ground.recreateAt) || (panX < ground.x && ground.x < panX + canvas.width))
+
+    // Only show the ground that we can see
+    grounds.filter(ground => (ground.x < panX && panX < ground.nextGroundX) || (panX < ground.x && ground.x < panX + canvas.width))
         .forEach(ground => ground.show());
-    // push();
-    // x = groundBody.GetPosition().x * SCALE;
-    // y = groundBody.GetPosition().y * SCALE;
-    //
-    // translate(x, y);
-    // fill(0, 0, 0);
-    // noStroke();
-    // rectMode(CENTER);
-    // rect(0, 0, canvas.width, 20);
-    // pop();
 
     car.show();
     car.update();
